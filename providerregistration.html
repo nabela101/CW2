@@ -5,7 +5,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
-  <div id="app">
         <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         <a class="navbar-brand" href="#"><img style="width:100px;" v-bind:src="img.src" v-bind:alt="img.alt"></a>
@@ -16,9 +15,9 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                           <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                              <a class="nav-link" href="student.html">Home <span class="sr-only">(current)</span></a>
+                              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                             </li>
-                            <li class="nav-item" v-if="!logged">
+                            <li class="nav-item">
                               <a class="nav-link" href="index.html">Login</a>
                             </li>
                             <li class="nav-item"  v-if="!logged">
@@ -35,29 +34,41 @@
                         </div>
                       </nav>
         </header>
-        <main role="main" id="login">
+
+        <main role="main">
                 <section>
                     <div class="container">
                         <div class="content">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h1>Login</h1>
+                                    <h1>Student/Parent Registration</h1>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <p>Please insert login details </p>
-                                    <form action="register_handler.html" method="post" id="registerForm">
+                                <div class="col-md-12" id="app">
+                                    <p>Please fill in the form to craete an account </p>
+                                    <form action="#" method="post" id="registerForm">
+                                            <div class="form-group row">
+                                                <label for="fname" class="col-sm-4">First Name</label>
+                                                <input type="text" class="form-control col-sm-8" name="first_name" id="fname" v-model="fname"/>
+                                                
+                                                <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="lname" class="col-sm-4">Last Name</label>
+                                                <input type="text" class="form-control col-sm-8" name="last_name" id="lname" v-model="lname"/>
+                                            </div>
                                             <div class="form-group row">
                                                 <label for="email" class="col-sm-4">Email</label>
-                                                <input type="text" class="form-control col-sm-8" v-model="email" name="email" id="email"/>
+                                                <input type="text" class="form-control col-sm-8" name="email" id="email" v-model="email"/>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="psw" class="col-sm-4">Password</label>
-                                                <input type="password" class="form-control col-sm-8" v-model="psw" name="password" id="psw"/>
+                                                <input type="password" class="form-control col-sm-8" name="password" id="psw" v-model="psw"/>
                                             </div>
                                             <div class="form-group row">
-                                                <button type="button" class="btn btn-primary" id="login_submit" v-on:click="login">Login</button>
+                                              <input type="hidden" v-model="usertype" value="provider" data-ref="type" />
+                                                <button type="button" class="btn btn-primary" id="registerBtn" v-on:click="submit">Submit</button>
                                             </div>
                                     </form>
                                     
@@ -66,12 +77,11 @@
                         </div>
                     </div>
                 </section>
+
             </main>
-            </div>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
             <script src="app.js"></script>
-    
     </body>
 </html>

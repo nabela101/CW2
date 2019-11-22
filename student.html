@@ -22,7 +22,10 @@
                               <a class="nav-link" href="index.html">Login</a>
                             </li>
                             <li class="nav-item"  v-if="!logged">
-                              <a class="nav-link" href="registration.html">Registration</a>
+                              <a class="nav-link" href="registration.html">Student Registration</a>
+                            </li>
+                            <li class="nav-item"  v-if="!logged">
+                              <a class="nav-link" href="providerregistration.html">Provider Registration</a>
                             </li>
 
                             <li class="nav-item">
@@ -195,7 +198,7 @@
                                 //let users = JSON.parse(localStorage.getItem("loggedinUser") || "[]");
                                 localStorage.removeItem("loggedinUser");
                                 this.logged = false;
-                                window.location = "login.html";
+                                window.location = "index.html";
                             }
                         },
                         computed: {

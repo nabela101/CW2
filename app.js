@@ -185,7 +185,7 @@ const app = new Vue({
             //let users = JSON.parse(localStorage.getItem("loggedinUser") || "[]");
             localStorage.removeItem("loggedinUser");
             this.logged = false;
-            window.location = "login.html";
+            window.location = "index.html";
         }
     }
 
