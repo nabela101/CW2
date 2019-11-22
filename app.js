@@ -175,7 +175,7 @@ const app = new Vue({
                 else{
                     localStorage.setItem("loggedinUser",JSON.stringify(loggedIn));
                     if(this.usertype==="provider") window.location = "serviceprovider.html"; 
-                    else window.location = "lab5.html"; 
+                    else window.location = "student.html"; 
                 }
             }
                    

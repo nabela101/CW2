@@ -16,7 +16,7 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                           <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                              <a class="nav-link" href="lab5.html">Home <span class="sr-only">(current)</span></a>
+                              <a class="nav-link" href="student.html">Home <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item" v-if="!logged">
                               <a class="nav-link" href="index.html">Login</a>
@@ -40,6 +40,13 @@
                 <section>
                     <div class="container">
                         <div class="content">
+                            <div class="row" v-if="logged">
+                                    <div class="col-md-12 alert alert-success">
+                                        First name: {{user.fname}},
+                                        Last name: {{user.lname}},
+                                        Email: {{user.email}}
+                                    </div>
+                                </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <table class="table table-hover">
