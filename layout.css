@@ -1,0 +1,49 @@
+div,header,aside,main {
+    border: solid lightblue;
+    box-sizing: border-box;
+    margin: 1%;
+    padding: 10px;
+}
+header {
+   width: 95%;}
+   logo {width: 100px;}
+   searchbox {width: 300px;}
+   logo, searchbox{ height: 50px;
+   display: inline-block;
+   grid-column: 1 / 3;
+   grid-row: 1;
+   }
+button {
+   height: 50px;
+   margin: 20px;
+   padding: 10px;
+}
+aside {
+  width: 20%;
+  float: left;
+  grid-column: 1;
+  grid-row: 2;
+}
+main {
+  width: 70%;
+  margin-left: 25%;
+}
+.filter {
+   width: 80%;
+   min-height: 100px;
+}
+.product {
+   width: 200px;
+   height: 200px;
+   display: inline-block;
+}
+.container {
+   display: grid;
+   grid-template-columns: 1fr 3fr 1fr;
+   gap: 20px;
+}
+
+article {
+    grid-column: 2;
+    grid-row: 2;
+}
