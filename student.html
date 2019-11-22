@@ -164,6 +164,33 @@
                                 }
                             }
                         },
+                        methods:{
+                            submitReview: function(event){
+                                this.rows.forEach(element => {
+                                    if(element.index==event.target.name){
+                                        let prev_count = element.reviews.count
+                                        let curr_count = prev_count + 1
+                                        let curr_avg = element.reviews.average
+                                        let new_avg = ((parseFloat(curr_avg)* parseInt(prev_count))+ parseInt(event.target.value)) / parseInt(curr_count)
+                                        element.reviews.average = new_avg.toFixed(2)
+                                        element.reviews.count = curr_count
+                                        //console.log(prev_count + " | "+curr_count)
+                                        element.reviews.review.push({'name':'test', 'star':event.target.value})
+                                        //console.log(element.reviews.review)
+                                        document.getElementById(event.target.id).setAttribute('disabled','disabled')
+                                    }
+                                    else{
+                                    }
+                                });
+                                //console.log(event.target.name)
+                            },
+                            logout(){
+                                //let users = JSON.parse(localStorage.getItem("loggedinUser") || "[]");
+                                localStorage.removeItem("loggedinUser");
+                                this.logged = false;
+                                window.location = "login.html";
+                            }
+                        },
                         computed: {
                             filteredAndSorted(){
                             var st = this.search
