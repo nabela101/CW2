@@ -163,7 +163,83 @@
                                     console.log("Logged: "+ this.logged);
                                 }
                             }
+                        },
+                        computed: {
+                            filteredAndSorted(){
+                            var st = this.search
+                            var filter = this.filter_topic
+            
+                            var min = this.min
+                            var max = this.max
+            
+                            var arrayKeyword =  this.rows.filter(function(item) {
+                                return item.topic.indexOf(st) > -1;
+                            });
+            
+                            this.topic_filter_all = arrayKeyword.map(item => item.topic)
+                                .filter((value, index, self) => self.indexOf(value) === index);
+            
+                            var arrayFilterPrice;
+                            if(min!="" && max==""){
+                                arrayFilterPrice =  arrayKeyword.filter(function(item) {
+                                    return item.price >= min
+                                });
+                            }
+                            else if(min=="" && max!=""){
+                                arrayFilterPrice =  arrayKeyword.filter(function(item) {
+                                    return item.price <= max
+                                });
+                            }
+                            else if(min!="" && max!=""){
+                                arrayFilterPrice =  arrayKeyword.filter(function(item) {
+                                    return item.price >= min && item.price <= max
+                                });
+                            }
+                            else{
+                                arrayFilterPrice= arrayKeyword;
+                            }
+            
+                            var arrayFilter;
+                            if(filter!=""){
+                                arrayFilter =  arrayFilterPrice.filter(function(item) {
+                                    return item.topic == filter; 
+                                });
+                            }
+                            else{
+                                arrayFilter = arrayFilterPrice;
+                            }
+                            
+                            if(arrayFilter.length < 1) this.hasData = false;
+                            
+                            var rowz;
+                            if(this.sorting==='topic'){
+                                if(this.sorting_by==='asc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.topic > b.topic) ? 1 : -1)
+                                } 
+                                if(this.sorting_by==='desc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.topic > b.topic) ? -1 : 1)
+                                }
+                            } 
+                            if(this.sorting==='location'){
+                                if(this.sorting_by==='asc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.location > b.location) ? 1 : -1)
+                                } 
+                                if(this.sorting_by==='desc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.location > b.location) ? -1 : 1)
+                                }
+                            } 
+                            if(this.sorting==='price'){
+                                if(this.sorting_by==='asc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.price > b.price) ? 1 : -1)
+                                } 
+                                if(this.sorting_by==='desc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.price > b.price) ? -1 : 1)
+                                }
+                            }
+            
+                            return rowz;
                         }
+                    }
               
                         })
                     </script>
