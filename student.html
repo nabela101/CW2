@@ -115,5 +115,58 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script>
+                    const app = new Vue ({
+                        el: '#app',
+                        data: {
+                            search: '',
+                            logged: false,
+                            min: '',
+                            max: '',
+                            usertype: '',
+                            menuList:[
+                                {id:0,link:'index.html', text:'Home'},
+                                {id:1,link:'about.html', text:'About'},
+                                {id:2,link:'contact.html', text:'Contact'}
+                            ],
+                            img:  {
+                                src: 'logo.jpg',
+                                alt: 'A placeholder image of animals'
+                            },
+                            sorting:'topic', //topic/location/price
+                            sorting_by:'asc', //desc,
+                            hasData: true,
+                            current_result : '',
+                            rows: [
+                                {'index':1,'topic': 'math', 'location': 'hendon', 'price': 100, 'time':'4pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':5}]} },
+                                {'index':2,'topic': 'math', 'location': 'colindale', 'price': 80, 'time':'5pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':3},{'name':'Nabela', 'star':5}]} },
+                                {'index':3,'topic': 'math', 'location': 'brent cross', 'price': 90, 'time':'6pm weekend','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':5},{'name':'Nabela', 'star':5}]} },
+                                {'index':4,'topic': 'math', 'location': 'golders green', 'price': 120, 'time':'3pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':2}]} },
+                                {'index':5,'topic': 'english', 'location': 'hendon', 'price': 110, 'time':'4pm week','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':5}]} },
+                                {'index':6,'topic': 'english', 'location': 'colindale', 'price': 90, 'time':'5pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':2},{'name':'Nabela', 'star':2}]} },
+                                {'index':7,'topic': 'english', 'location': 'brent cross', 'price': 90, 'time':'3pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':1},{'name':'Nabela', 'star':5}]} },
+                                {'index':8,'topic': 'english', 'location': 'golders green', 'price': 130, 'time':'6pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':5}]} },
+                                {'index':9,'topic': 'piano', 'location': 'hendon', 'price': 120, 'time':'4pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':5}]} },
+                                {'index':10,'topic': 'piano', 'location': 'golders green', 'price': 140, 'time':'3pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':5}]} }
+                            ],
+                            topic_filter_all:[],
+                            price_filter_all:[],
+                            filter_topic:''
+                        },
+                        mounted: function(){
+                            let users = JSON.parse(localStorage.getItem("loggedinUser") || "[]");
+                            this.user = users;
+                            console.log(Object.keys(users).length);
+                            if(Object.keys(users).length > 0){
+                                if(users.email.length > 0){
+                                    this.logged = true;
+                                    console.log("Logged: "+ this.logged);
+                                }
+                            }
+                        }
+              
+                        })
+                    </script>
+            
     </body>
 </html>
