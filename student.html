@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+        <header>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <a class="navbar-brand" href="#"><img style="width:100px;" v-bind:src="img.src" v-bind:alt="img.alt"></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+                      
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                          <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                              <a class="nav-link" href="lab5.html">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item" v-if="!logged">
+                              <a class="nav-link" href="index.html">Login</a>
+                            </li>
+                            <li class="nav-item"  v-if="!logged">
+                              <a class="nav-link" href="registration.html">Registration</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" v-on:click="logout" v-if="logged">Logout</button>
+                              </li>
+                          </ul>
+                          <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                          </form>
+                        </div>
+                      </nav>
+        </header>
+        <main role="main" id="login">
+                <section>
+                    <div class="container">
+                        <div class="content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <td><label>Search Courses:</label></td>
+                                            <td colspan="3">  
+                                                <input type="text" class="form-control" v-model="search" placeholder="Search course.."/>           
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong class="titleOf">Sort By:</strong>
+                                            </td>
+                                            <td>
+                                                    <select v-model='sorting' class="form-control">
+                                                            <option value='topic'>Topic</option>
+                                                            <option value="location">Location</option>
+                                                            <option value="price">Price</option>
+                                                        </select>
+                                                        <select v-model="sorting_by" class="form-control">
+                                                            <option value="asc">Ascending</option>
+                                                            <option value="desc">Descending</option>
+                                                        </select>
+                                            </td>
+                                            <td><strong>Filter Result</strong></td>
+                                            <td>
+                                                    <select v-model="filter_topic" class="form-control">
+                                                            <option value="">Select topic: </option>
+                                                            <option v-for="filter in topic_filter_all" v-bind:value="filter">{{filter}}</option>
+                                                        </select>
+                                                        <strong>Price: </strong> 
+                                                        <input type="number" class="form-control" placeholder="Min" v-model="min" />
+                                                        <input type="text" class="form-control" placeholder="Max" v-model="max"/>
+                                                    
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                    Showing results for Keyword-{{search}}, Topic-{{filter_topic}}, Price - {{min}} to {{max}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                        
+                                      </div>
+                                 
+                                </div>
+                            </div>
+                            <div class="row">
+                                                 
+                                                <div v-for="row in filteredAndSorted" class="col-md-4" style="border:1px solid #eee; padding: 10px;">
+                                                      Topic: {{ row.topic }} <br> Location: {{ row.location }} <br> Price: {{row.price}}<br/>
+                                                      Reviews: {{row.reviews.average}}/5 (total: {{row.reviews.count}}) <br/>
+                                                      <select v-bind:name="row.index" v-bind:id="row.index" @change="submitReview($event)" > 
+                                                          <option value="">Your review:</option>
+                                                          <option value="1">1</option>
+                                                          <option value="2">2</option>
+                                                          <option value="3">3</option>
+                                                          <option value="4">4</option>
+                                                          <option value="5">5</option>
+                              
+                                                      </select>
+                                                    </div>
+                                              
+                                    
+                                              <strong v-if="!hasData">No results found!</strong>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
