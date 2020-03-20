@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+        <header>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <a class="navbar-brand" href="#"><img style="width:100px;" v-bind:src="img.src" v-bind:alt="img.alt"></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+                      
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                          <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                              <a class="nav-link" href="student.html">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item" v-if="!logged">
+                              <a class="nav-link" href="index.html">Login</a>
+                            </li>
+                            <li class="nav-item"  v-if="!logged">
+                              <a class="nav-link" href="/registration">Student Registration</a>
+                            </li>
+                            <li class="nav-item"  v-if="!logged">
+                              <a class="nav-link" href="providerregistration.html">Provider Registration</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" v-on:click="logout" v-if="logged">Logout</button>
+                              </li>
+                          </ul>
+                          <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                          </form>
+                        </div>
+                      </nav>
+        </header>
+        <main role="main" id="login">
+                <section>
+                    <div class="container">
+                        <div class="content">
+                            <div class="row" v-if="logged">
+                                    <div class="col-md-12 alert alert-success">
+                                        First name: {{user.fname}},
+                                        Last name: {{user.lname}},
+                                        Email: {{user.email}}
+                                    </div>
+                                </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <td><label>Search Courses:</label></td>
+                                            <td colspan="3">  
+                                                <input type="text" class="form-control" v-model="search" placeholder="Search course.."/>           
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong class="titleOf">Sort By:</strong>
+                                            </td>
+                                            <td>
+                                                    <select v-model='sorting' class="form-control">
+                                                            <option value='topic'>Topic</option>
+                                                            <option value="location">Location</option>
+                                                            <option value="price">Price</option>
+                                                        </select>
+                                                        <select v-model="sorting_by" class="form-control">
+                                                            <option value="asc">Ascending</option>
+                                                            <option value="desc">Descending</option>
+                                                        </select>
+                                            </td>
+                                            <td><strong>Filter Result</strong></td>
+                                            <td>
+                                                    <select v-model="filter_topic" class="form-control">
+                                                            <option value="">Select topic: </option>
+                                                            <option v-for="filter in topic_filter_all" v-bind:value="filter">{{filter}}</option>
+                                                        </select>
+                                                        <strong>Price: </strong> 
+                                                        <input type="number" class="form-control" placeholder="Min" v-model="min" />
+                                                        <input type="text" class="form-control" placeholder="Max" v-model="max"/>
+                                                    
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                    Showing results for Keyword-{{search}}, Topic-{{filter_topic}}, Price - {{min}} to {{max}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                        
+                                      </div>
+                                 
+                                </div>
+                            </div>
+                            <!--LessonOutput div will output the lessons in the database-->
+                            <div id= "lessonOutput"></div>
+                           <!--<div class="row">
+                                                 
+                                                <div v-for="row in filteredAndSorted" class="col-md-4" style="border:1px solid #eee; padding: 10px;">
+                                                      Topic: {{ row.topic }} <br> Location: {{ row.location }} <br> Price: {{row.price}}<br/>
+                                                      Reviews: {{row.reviews.average}}/5 (total: {{row.reviews.count}}) <br/>
+                                                      <select v-bind:name="row.index" v-bind:id="row.index" @change="submitReview($event)" > 
+                                                          <option value="">Your review:</option>
+                                                          <option value="1">1</option>
+                                                          <option value="2">2</option>
+                                                          <option value="3">3</option>
+                                                          <option value="4">4</option>
+                                                          <option value="5">5</option>
+                              
+                                                      </select>
+                                                    </div>--> 
+                                              
+                                    
+                                              <strong v-if="!hasData">No results found!</strong>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            </div>
+            <script src= "client.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script>
+                    const app = new Vue ({
+                        el: '#app',
+                        data: {
+                            search: '',
+                            logged: false,
+                            min: '',
+                            max: '',
+                            usertype: '',
+                            menuList:[
+                                {id:0,link:'index.html', text:'Home'},
+                                {id:1,link:'about.html', text:'About'},
+                                {id:2,link:'contact.html', text:'Contact'}
+                            ],
+                            img:  {
+                                src: 'logo.jpg',
+                                alt: 'A placeholder image of animals'
+                            },
+                            sorting:'topic', //topic/location/price
+                            sorting_by:'asc', //desc,
+                            hasData: true,
+                            current_result : '',
+                            rows: [
+                                {'index':1,'topic': 'math', 'location': 'hendon', 'price': 100, 'time':'4pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':5}]} },
+                                {'index':2,'topic': 'math', 'location': 'colindale', 'price': 80, 'time':'5pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':3},{'name':'Nabela', 'star':5}]} },
+                                {'index':3,'topic': 'math', 'location': 'brent cross', 'price': 90, 'time':'6pm weekend','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':5},{'name':'Nabela', 'star':5}]} },
+                                {'index':4,'topic': 'math', 'location': 'golders green', 'price': 120, 'time':'3pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':2}]} },
+                                {'index':5,'topic': 'english', 'location': 'hendon', 'price': 110, 'time':'4pm week','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':5}]} },
+                                {'index':6,'topic': 'english', 'location': 'colindale', 'price': 90, 'time':'5pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':2},{'name':'Nabela', 'star':2}]} },
+                                {'index':7,'topic': 'english', 'location': 'brent cross', 'price': 90, 'time':'3pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':1},{'name':'Nabela', 'star':5}]} },
+                                {'index':8,'topic': 'english', 'location': 'golders green', 'price': 130, 'time':'6pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':5}]} },
+                                {'index':9,'topic': 'piano', 'location': 'hendon', 'price': 120, 'time':'4pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':5}]} },
+                                {'index':10,'topic': 'piano', 'location': 'golders green', 'price': 140, 'time':'3pm weekdays','length':'2 hour', 'reviews':{'average': 4.5, 'count':2, 'review':[{'name':'jon', 'star':4},{'name':'Nabela', 'star':5}]} }
+                            ],
+                            topic_filter_all:[],
+                            price_filter_all:[],
+                            filter_topic:''
+                        },
+                        mounted: function(){
+                            let users = JSON.parse(localStorage.getItem("loggedinUser") || "[]");
+                            this.user = users;
+                            console.log(Object.keys(users).length);
+                            if(Object.keys(users).length > 0){
+                                if(users.email.length > 0){
+                                    this.logged = true;
+                                    console.log("Logged: "+ this.logged);
+                                }
+                            }
+                        },
+                        methods:{
+                            submitReview: function(event){
+                                this.rows.forEach(element => {
+                                    if(element.index==event.target.name){
+                                        let prev_count = element.reviews.count
+                                        let curr_count = prev_count + 1
+                                        let curr_avg = element.reviews.average
+                                        let new_avg = ((parseFloat(curr_avg)* parseInt(prev_count))+ parseInt(event.target.value)) / parseInt(curr_count)
+                                        element.reviews.average = new_avg.toFixed(2)
+                                        element.reviews.count = curr_count
+                                        //console.log(prev_count + " | "+curr_count)
+                                        element.reviews.review.push({'name':'test', 'star':event.target.value})
+                                        //console.log(element.reviews.review)
+                                        document.getElementById(event.target.id).setAttribute('disabled','disabled')
+                                    }
+                                    else{
+                                    }
+                                });
+                                //console.log(event.target.name)
+                            },
+                            logout(){
+                                //let users = JSON.parse(localStorage.getItem("loggedinUser") || "[]");
+                                localStorage.removeItem("loggedinUser");
+                                this.logged = false;
+                                window.location = "index.html";
+                            }
+                        },
+                        computed: {
+                            filteredAndSorted(){
+                            var st = this.search
+                            var filter = this.filter_topic
+            
+                            var min = this.min
+                            var max = this.max
+            
+                            var arrayKeyword =  this.rows.filter(function(item) {
+                                return item.topic.indexOf(st) > -1;
+                            });
+            
+                            this.topic_filter_all = arrayKeyword.map(item => item.topic)
+                                .filter((value, index, self) => self.indexOf(value) === index);
+            
+                            var arrayFilterPrice;
+                            if(min!="" && max==""){
+                                arrayFilterPrice =  arrayKeyword.filter(function(item) {
+                                    return item.price >= min
+                                });
+                            }
+                            else if(min=="" && max!=""){
+                                arrayFilterPrice =  arrayKeyword.filter(function(item) {
+                                    return item.price <= max
+                                });
+                            }
+                            else if(min!="" && max!=""){
+                                arrayFilterPrice =  arrayKeyword.filter(function(item) {
+                                    return item.price >= min && item.price <= max
+                                });
+                            }
+                            else{
+                                arrayFilterPrice= arrayKeyword;
+                            }
+            
+                            var arrayFilter;
+                            if(filter!=""){
+                                arrayFilter =  arrayFilterPrice.filter(function(item) {
+                                    return item.topic == filter; 
+                                });
+                            }
+                            else{
+                                arrayFilter = arrayFilterPrice;
+                            }
+                            
+                            if(arrayFilter.length < 1) this.hasData = false;
+                            
+                            var rowz;
+                            if(this.sorting==='topic'){
+                                if(this.sorting_by==='asc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.topic > b.topic) ? 1 : -1)
+                                } 
+                                if(this.sorting_by==='desc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.topic > b.topic) ? -1 : 1)
+                                }
+                            } 
+                            if(this.sorting==='location'){
+                                if(this.sorting_by==='asc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.location > b.location) ? 1 : -1)
+                                } 
+                                if(this.sorting_by==='desc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.location > b.location) ? -1 : 1)
+                                }
+                            } 
+                            if(this.sorting==='price'){
+                                if(this.sorting_by==='asc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.price > b.price) ? 1 : -1)
+                                } 
+                                if(this.sorting_by==='desc'){
+                                    rowz = arrayFilter.sort((a, b) => (a.price > b.price) ? -1 : 1)
+                                }
+                            }
+            
+                            return rowz;
+                        }
+                    }
+              
+                        })
+                    </script>
+            
+    </body>
+</html>
